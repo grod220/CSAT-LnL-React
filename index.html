@@ -1,0 +1,81 @@
+<html>
+
+<head>
+    <!-- <meta http-equiv="refresh" content="2"> -->
+    <style>
+        .app {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .box {
+            border: 5px solid darkslategray;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            font-size: 150px;
+            color: orangered;
+        }
+
+        .box:hover {
+            background-color: lightcyan;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app"></div>
+
+    <script>
+        const gameState = {
+            currentPlayer: "X",
+            board: ["", "", "", "", "", "", "", "", ""]
+        }
+
+        const render = stateObj => {
+            const app = document.querySelector(".app");
+            app.innerHTML = `
+                    <div class="box" data-square-id="0">${stateObj.board[0]}</div>
+                    <div class="box" data-square-id="1">${stateObj.board[1]}</div>
+                    <div class="box" data-square-id="2">${stateObj.board[2]}</div>
+                    <div class="box" data-square-id="3">${stateObj.board[3]}</div>
+                    <div class="box" data-square-id="4">${stateObj.board[4]}</div>
+                    <div class="box" data-square-id="5">${stateObj.board[5]}</div>
+                    <div class="box" data-square-id="6">${stateObj.board[6]}</div>
+                    <div class="box" data-square-id="7">${stateObj.board[7]}</div>
+                    <div class="box" data-square-id="8">${stateObj.board[8]}</div>
+            `
+        }
+
+        render(gameState);
+
+        const app = document.querySelector(".app");
+
+        app.addEventListener("click", (event) => {
+            const indexClicked = parseInt(event.target.dataset.squareId);
+            if (gameState.board[indexClicked]) return;
+            gameState.board[indexClicked] = gameState.currentPlayer;
+
+            if (isWinner(gameState.currentPlayer)) {
+                alert(gameState.currentPlayer + " IS A WINNER! WOOOT!")
+            }
+            gameState.currentPlayer = gameState.currentPlayer === "X" ? "O" : "X";
+
+            // RE-RENDER ENTIRE DOM
+            render(gameState);
+        })
+
+        const winningCombos = [[0, 1, 2], [0, 4, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [3, 4, 5], [6, 7, 8], [2, 4, 6]];
+
+        const isWinner = currentPlayer => {
+            return winningCombos.some(combo => {
+                return combo.every(indexNum => gameState.board[indexNum] === currentPlayer);
+            });
+        }
+    </script>
+</body>
+
+</html>
