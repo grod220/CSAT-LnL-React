@@ -1,0 +1,65 @@
+<html>
+
+<head>
+    <style>
+        .app {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .box {
+            width: 200px;
+            height: 200px;
+            border: 5px solid darkblue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: tomato;
+            font-size: 80px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <div class="box" data-box-id="0"></div>
+        <div class="box" data-box-id="1"></div>
+        <div class="box" data-box-id="2"></div>
+        <div class="box" data-box-id="3"></div>
+        <div class="box" data-box-id="4"></div>
+        <div class="box" data-box-id="5"></div>
+        <div class="box" data-box-id="6"></div>
+        <div class="box" data-box-id="7"></div>
+        <div class="box" data-box-id="8"></div>
+    </div>
+    <script>
+        const playerOne = "X";
+        const playerTwo = "O";
+        let currentPlayer = playerOne;
+
+        const app = document.querySelector('.app');
+        const boxes = Array.from(app.children);
+
+        app.addEventListener('click', event => {
+            event.target.innerHTML = currentPlayer;
+
+            if(isWinner(currentPlayer)) {
+                alert(`Congrats! ${currentPlayer} has won. Woot! 👍`)
+            }
+
+            currentPlayer = currentPlayer === playerOne ? playerTwo : playerOne;
+        });
+
+        const winningCombos = [[0, 1, 2], [0, 4, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [3, 4, 5], [6, 7, 8], [2, 4, 6]];
+
+        const isWinner = currentPlayer => {
+            return winningCombos.some(combo => {
+               return combo.every(index => {
+                   return boxes[index].innerHTML === currentPlayer;
+                })
+            })
+        }
+    </script>
+</body>
+
+</html>

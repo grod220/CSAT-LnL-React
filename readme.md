@@ -31,7 +31,10 @@ Part 2:
 Reflection:
     - Computationally expensive
     - Stuff that only exists in the client side: Input example
-    - Rendering logic is awful.
+    - JSX potential
 
 Solution:
     - ReactJS
+
+Close:
+    - Conway's game of life example
